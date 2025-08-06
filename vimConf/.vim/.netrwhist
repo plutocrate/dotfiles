@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/home/plutus/Path/lesgo/cc-sandbox/c-ecosystem'
+let g:netrw_dirhist_4='/home/plutus/Path/lesgo/cc-sandbox'
+let g:netrw_dirhist_3='/home/plutus/.config/foot'
+let g:netrw_dirhist_2='/home/plutus/.config/aseprite/sessions'
+let g:netrw_dirhist_1='/home/plutus/.config/aseprite'
+let g:netrw_dirhist_0='/home/plutus/.config/aseprite/palettes'
+let g:netrw_dirhist_9='/home/plutus/.config/aseprite'
+let g:netrw_dirhist_8='/home/plutus/.config'
+let g:netrw_dirhist_7='/home/plutus'
+let g:netrw_dirhist_6='/home/plutus/.config/fish/functions'

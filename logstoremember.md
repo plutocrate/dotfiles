@@ -7,3 +7,8 @@ DONE.
 
 ## Finding dependencies with pacman 
 1. `pacman -Qi <package_name>`
+
+## Looking for packages with pacman
+1. `pacman -Q or -Qq -Qe` to look for installed packages
+2. `pacman -Qdt` to look for orphan packages
+3. `pacman -Qi <package_name>` to inquire for a certain package
