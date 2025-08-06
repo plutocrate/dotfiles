@@ -12,3 +12,7 @@ DONE.
 1. `pacman -Q or -Qq -Qe` to look for installed packages
 2. `pacman -Qdt` to look for orphan packages
 3. `pacman -Qi <package_name>` to inquire for a certain package
+
+## Using `dd` to flash usb
+1. do a `lsblk` to find the usb path
+2. do `sudo dd if=abs/path/of/iso of=/path/of/usb bs=4M status=progress conv=fsync`
