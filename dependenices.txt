@@ -1,0 +1,10 @@
+## Download these dependencies
+
+# i use this
+sudo pacman -Sy vieb okular foot fish glow tmux firefox vim mandb man-pages nodejs 
+# yay (recommended)
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+yay -S spotify discord freecad
+
+# pre-installed
+sudo pacman -Sy kitty dolphin wofi waybar
