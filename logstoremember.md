@@ -20,3 +20,7 @@
 1. `curl -u USERNAME:token https://api.github.com/user/repos -d '{"name":"REPO-NAME","private":false}'`
 2. git remote add origin https://github.com/USERNAME/REPO
 3. git push -u origin master
+
+## Copying text from terminal to clipboard
+1. get xclip
+2. `cat <file> | xclip -selection clipboard`
