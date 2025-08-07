@@ -16,3 +16,8 @@ DONE.
 ## Using `dd` to flash usb
 1. do a `lsblk` to find the usb path
 2. do `sudo dd if=abs/path/of/iso of=/path/of/usb bs=4M status=progress conv=fsync`
+
+## Creating github repo from system
+1. `curl -u USERNAME:token https://api.github.com/user/repos -d '{"name":"REPO-NAME","private":false}'`
+2. git remote add origin https://github.com/USERNAME/REPO
+3. git push -u origin master
