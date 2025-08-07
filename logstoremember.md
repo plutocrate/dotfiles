@@ -24,3 +24,4 @@
 ## Copying text from terminal to clipboard
 1. get xclip
 2. `cat <file> | xclip -selection clipboard`
+3. `xcilp -selection clipboard -o`
