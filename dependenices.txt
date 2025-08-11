@@ -7,7 +7,7 @@ PTR
 ## Download these dependencies
 
 # i use this
-sudo pacman -Sy vieb okular foot fish glow tmux firefox vim mandb man-pages nodejs 
+sudo pacman -Sy vieb okular foot fish glow tmux firefox vim mandb man-pages nodejs brightnessctl
 # yay (recommended)
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
 yay -S spotify discord freecad
