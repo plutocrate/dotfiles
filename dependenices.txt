@@ -8,7 +8,7 @@ sudo pacman -Syu qutebrowser okular foot fish glow tmux firefox brave vim mandb 
 
 sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si;
 
-yay -S spotify discord kicad noisetorch arecord;
+yay -S spotify discord kicad noisetorch arecord steam;
 
 
 
