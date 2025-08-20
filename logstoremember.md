@@ -4,9 +4,6 @@
 1. I installed wev to find out the keycode of the number row
 2. After figuring out the keycode do this `bind =$mainMod, code:<key_code_n>, workspace, n` 
 
-## Finding dependencies with pacman 
-1. `pacman -Qi <package_name>`
-
 ## Looking for packages with pacman
 1. `pacman -Q or -Qq -Qe` to look for installed packages
 2. `pacman -Qdt` to look for orphan packages
