@@ -1,9 +1,16 @@
-## Download these dependencies
+####### PACKAGES
 
-sudo pacman -Sy vieb okular foot fish glow tmux firefox vim mandb man-pages nodejs brightnessctl;
+
+
+sudo pacman -Syu qutebrowser okular foot fish glow tmux firefox brave vim mandb man-pages nodejs brightnessctl alsa-utils pavucontrol ;
+
 # yay (recommended)
-sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si;
-yay -S spotify discord freecad;
 
-## pre-installed
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si;
+
+yay -S spotify discord kicad noisetorch arecord;
+
+
+
+####### PRE-INSTALLED 
 sudo pacman -Sy kitty dolphin wofi waybar
