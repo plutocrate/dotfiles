@@ -2,7 +2,7 @@
 
 
 
-sudo pacman -Syu qutebrowser okular foot fish glow tmux firefox brave vim mandb man-pages nodejs brightnessctl alsa-utils pavucontrol ;
+sudo pacman -Syu qutebrowser okular foot fish glow tmux vim mandb man-pages nodejs brightnessctl alsa-utils pavucontrol dosfstools;
 
 # yay (recommended)
 
