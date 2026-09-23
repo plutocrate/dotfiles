@@ -3,7 +3,6 @@
 
 !hypr/
 !hypr/**
-hypr/*.bak
 
 !fish/
 !fish/**
