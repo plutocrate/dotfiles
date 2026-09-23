@@ -3,19 +3,20 @@
 
 !hypr/
 !hypr/**
+hypr/*.bak
+
 !fish/
 !fish/**
-!nvim/
-!nvim/**
-!foot/
-!foot/**
-!btop/
-!btop/**
-!mpv/
-!mpv/**
-
-# Fish state — never commit
 fish/fish_variables
 
-# Backups / generated config
-hypr/*.bak
+!nvim/
+!nvim/**
+
+!foot/
+!foot/**
+
+!btop/
+!btop/**
+
+!mpv/
+!mpv/**
