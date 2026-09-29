@@ -332,3 +332,6 @@ hl.window_rule({
 --     },
 --     no_focus = true,
 -- })
+
+-- MODULES
+require("modules.flutter")
