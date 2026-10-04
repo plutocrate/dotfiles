@@ -4,7 +4,6 @@ return {
     lazy = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
-      "stevearc/dressing.nvim",
       "saghen/blink.cmp",
     },
     keys = {
@@ -17,6 +16,9 @@ return {
       { "<leader>Fo", "<cmd>FlutterOutlineToggle<cr>", desc = "Outline" },
       { "<leader>Fl", "<cmd>FlutterLogToggle<cr>", desc = "Log" },
       { "<leader>Ft", "<cmd>FlutterDevTools<cr>", desc = "DevTools" },
+      { "<leader>Fg", "<cmd>FlutterPubGet<cr>", desc = "Pub Get" },
+      { "<leader>Fx", "<cmd>FlutterLspRestart<cr>", desc = "Restart LSP" },
+      { "<leader>Fa", "<cmd>FlutterReanalyze<cr>", desc = "Reanalyze" },
     },
     config = function()
       require("flutter-tools").setup({
@@ -24,6 +26,10 @@ return {
         ui = { border = "rounded" },
         decorations = {
           statusline = { app_version = true, device = true },
+        },
+        debugger = {
+          enabled = false,
+          run_via_dap = false,
         },
         widget_guides = { enabled = true },
         closing_tags = {
@@ -59,4 +65,24 @@ return {
       },
     },
   },
+
+  -- show Flutter app version + device in the statusline
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      table.insert(opts.sections.lualine_x, 1, function()
+        local d = vim.g.flutter_tools_decorations or {}
+        local parts = {}
+        if d.app_version and d.app_version ~= "" then
+          table.insert(parts, d.app_version)
+        end
+        if d.device and d.device ~= "" then
+          table.insert(parts, d.device)
+        end
+        return table.concat(parts, " ")
+      end)
+    end,
+  },
 }
+
+--- With DAP on, <leader>Fr starts your app under the debugger. Use <leader>db for breakpoints, and <F5>, <F10> and <F11> to continue and step.
