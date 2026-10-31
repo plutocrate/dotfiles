@@ -4,6 +4,7 @@ function tempc
     set -l editor
     set -l exit_sandbox 0
     set -l compile_cmd ""
+    set -l run_args ""
 
     # Prefer Neovim, then fall back to Vim.
     if type -q nvim
@@ -85,7 +86,7 @@ function tempc
             set_color normal
             set_color yellow
             echo "  Source: main.c"
-            echo "  Output: a.out"
+            echo "  Output: a.out (or whatever you pass to -o)"
             set_color normal
             echo
             set_color green --bold
@@ -122,41 +123,92 @@ function tempc
             builtin history save
 
             if eval $compile_cmd
-                if test -x ./a.out
+                # Work out which binary was produced: the -o target if given,
+                # otherwise a.out, otherwise the newest executable in the sandbox.
+                set -l run_bin ""
+                set -l o_match (string match -r -- '(?:^|\s)-o\s*("[^"]+"|\'[^\']+\'|\S+)' "$compile_cmd")
+                if test (count $o_match) -ge 2
+                    set run_bin (string trim -c '"\'' -- $o_match[2])
+                else
+                    set run_bin a.out
+                end
+
+                if not test -f "$run_bin" -a -x "$run_bin"
+                    set run_bin (find . -maxdepth 1 -type f -executable ! -name main.c -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -n 1 | string replace -r '^\S+ ' '')
+                end
+
+                # Make bare names runnable (foo -> ./foo).
+                if test -n "$run_bin"; and not string match -q '*/*' -- "$run_bin"
+                    set run_bin ./$run_bin
+                end
+
+                if test -n "$run_bin" -a -f "$run_bin" -a -x "$run_bin"
                     echo
                     set_color green --bold
                     echo "✓ Compilation successful!"
                     set_color normal
-                    echo
-                    set_color cyan --bold
-                    echo "──────────── PROGRAM OUTPUT ────────────"
-                    set_color normal
 
-                    ./a.out
+                    # Detect whether main() takes parameters (argc/argv, or unnamed ones).
+                    # `main()` and `main(void)` count as "no args".
+                    set -l needs_args 0
+                    set -l src (cat main.c | string collect)
+                    if string match -rq 'main\s*\(\s*(?!void\s*\))[^\s)]' -- $src
+                        set needs_args 1
+                    end
 
-                    echo
-                    set_color cyan --bold
-                    echo "────────────────────────────────────────"
-                    set_color normal
-                    set_color green
-                    echo "[r] Reopen editor"
-                    set_color normal
-                    set_color yellow
-                    echo "[any other key] Exit and delete temporary files"
-                    set_color normal
+                    while true
+                        if test $needs_args -eq 1
+                            echo
+                            set_color yellow
+                            echo "  main() takes arguments. Enter them below (Enter = none)."
+                            echo "  Quotes work, e.g.: hello \"two words\" 42"
+                            set_color normal
+                            read --command "$run_args" -P "Args ❯ " run_args
+                            if test $status -ne 0
+                                set exit_sandbox 1
+                                break
+                            end
+                        end
 
-                    read -n 1 -P "Choose ❯ " action
-                    if test $status -ne 0
-                        set exit_sandbox 1
-                    else if test "$action" = r -o "$action" = R
-                        set exit_sandbox 0
-                    else
-                        set exit_sandbox 1
+                        echo
+                        set_color cyan --bold
+                        echo "──────────── PROGRAM OUTPUT ────────────"
+                        set_color normal
+
+                        eval (string escape -- $run_bin) $run_args
+
+                        echo
+                        set_color cyan --bold
+                        echo "────────────────────────────────────────"
+                        set_color normal
+                        set_color green
+                        echo "[r] Reopen editor"
+                        if test $needs_args -eq 1
+                            echo "[a] Run again with different args"
+                        end
+                        set_color normal
+                        set_color yellow
+                        echo "[any other key] Exit and delete temporary files"
+                        set_color normal
+
+                        read -n 1 -P "Choose ❯ " action
+                        if test $status -ne 0
+                            set exit_sandbox 1
+                            break
+                        else if test "$action" = r -o "$action" = R
+                            set exit_sandbox 0
+                            break
+                        else if test $needs_args -eq 1 -a \( "$action" = a -o "$action" = A \)
+                            continue
+                        else
+                            set exit_sandbox 1
+                            break
+                        end
                     end
                     break
                 else
                     set_color yellow
-                    echo "Command succeeded, but ./a.out was not found."
+                    echo "Command succeeded, but no executable was found."
                     set_color normal
                 end
             else
